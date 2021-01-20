@@ -1,0 +1,15 @@
+---
+title: "R_Coding_Standards"
+author: "Samuel G. Finnerty"
+date: "20/01/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Always use text files / text editor
+2. Indent your code
+3. Limit the width of your code (80 columns?)
+4. Limit the length of individual functions
