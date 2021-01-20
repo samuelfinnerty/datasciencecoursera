@@ -1,0 +1,69 @@
+---
+title: "Functions_part_2"
+author: "Samuel G. Finnerty"
+date: "20/01/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Defining a function
+
+In addition to not specifying a default value, you can also set an argument value to NULL. 
+
+## Lazy Evaluation
+
+Functions are only evaluated as they are needed.  
+
+```{r, echo = TRUE}
+
+f <- function(a, b) {
+  a^2
+}
+
+```
+
+If I do f(2) the function never uses the argument b, so calling f(2) will not produce an error as the 2 is positionally matched to a. 
+
+```{r, echo = TRUE}
+
+g <- function(a, b) {
+  print(a)
+  print(b)
+  
+}
+
+```
+
+Now, if I run the function for say g(45) then i will get an error as there is no specified, or default, value for b. It will print the first line (a) but will then produce an error once it tries to print b.
+
+## The "..." Argument
+
+The ... argument indicates a variable number of arguments that are usually passed on to other functions.
+
+* ... is often used when extending another function and you don't want to copy the entire argument list of the original function
+
+for example, below, you may want to extend the plot function. but you don't want to copy the entire list of the original function. So instead of creating circles for points, as is the default in the plot() function. you specify that it will create lines
+now you don't want to change the rest so you use the ... to absorb the rest of the values of the original plot function
+```{r, echo = TRUE}
+
+myplot <- function(x, y, type = "l", ...) {
+  plot(x, y, type = type)
+}
+```
+
+Generic functions use ... so that extra arguments can be passed to methods
+
+**The ... function** is also necessary whwn the number of arguments passed to the function cannot be known in advance.
+
+For example, the first argument of paste() is ... which allows an unknown number of arguments to be passed to the function. 
+
+Another example is the function cat() which concatenates things together. 
+
+### **Arguments coming after the ...**
+
+any arguments appearing after the ... must be named explicitly and cannot be partially matched 
+
+

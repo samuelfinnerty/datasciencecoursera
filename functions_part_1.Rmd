@@ -1,0 +1,186 @@
+---
+title: "functions+part_1"
+author: "Samuel G. Finnerty"
+date: "20/01/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Functions
+
+ f <- function(<arguments) {
+ 
+ } 
+
+* Functions are created using the function directive and are stored as R objects like anything else.
+* Function is a class also. 
+* Functions can be passed as arguments to other functions
+* Functions can be nested, so that you can define a function inside of another function.
+* The return value of a function is the last expression in the function body to be evaluated
+
+Functions have *named arguments* which potentially have *default* values.
+
+* The *formal arguments* are the arguments included in the function definition
+* The *formals* function returns a list of all the formal arguments of a function
+* Not every function call in R makes use of all the formal arguments
+* Function arguments can be *missing* or might have default values
+
+
+## Argument matching
+
+R functions can be matched positionally or by name. So the following calls to sd are equivalent.
+
+```{r, echo = TRUE}
+
+mydata <- rnorm(100)
+sd(mydata)
+sd(x = mydata)
+sd(x = mydata, na.rm = FALSE)
+sd(na.rm = FALSE, x = mydata)
+sd(na.rm = FALSE, mydata)
+
+```
+
+### Argument matching by name
+
+You can mix positional matching with matching by name. When an argument is matched by name, it is 'taken out' of the argument list. The remaining unnamed arguments are matched in the order that they are listed in the function definition. 
+
+The following two calls are equivalent
+
+data has been matched by name so that is taken out.
+y ~ x hasn't been so it checks it against the function arguments. formula is first so it matches it against that. 
+1:100 is then matched against the next argument, which in this case is the subset argument
+
+```{r, echo = TRUE}
+
+# lm(data = mydata, y ~ x, model = FALSE, 1:100)
+
+# lm(y ~ x, mydata, 1:100, model = FALSE)
+```
+## Argument Matching
+
+Most of the time, named arguments are useful on the command line when you have a long argument list and you want to use defaults for much of it
+Named arguments also help if you can remember the name of the argument and not its position on the argument list(plotting is a good example). 
+
+### Partial Argument Matching
+
+Function arguments can also be partially matched which is useful for interactive work. 
+The order of operations when given an argument is:
+
+1. Check for exact match for a named argument
+2. Check for a partial match
+3. Check for a positional match
+
+
+
+
+## **Test Functions**
+```{r, echo = TRUE}
+add2 <- function(x, y) {
+  x + y
+}
+
+above10 <- function(x) {
+  #use function will return a logical vector of trues and falses
+  #to indicate which element of x is greater than 10
+  use <- x > 10 
+  #now I want to subset this vector of x with the logical use vector
+  x[use]
+  #now this function will return the subset of x that is greater than 10
+  
+}
+
+
+# n in this case is free for the user to define
+# however, if they do not define it then it will produce an error
+above <- function(x, n) {
+  use <- x > n
+  x[use]
+}
+
+# You may want to allow the user to specify the number 
+# as well as setting a default value if, say, 10 is a special number
+# that is used often
+
+above <- function(x, n = 10) {
+  use <- x > n
+  x[use]
+}
+
+# *** Now we want to look at a columnmean function for use with a matrix
+# in this case we are calling the argument x, but you could call it whatever you 
+# want. x is going to be a dataframe or a matrix
+columnmean <- function(x) {
+  #create a nc variable that calculates the number of columns in x
+  nc <- ncol(x)
+  #then you need to initialise a vector that will store the means for each column
+  #call it means. it will be a numeric vecotr equal to the length of nc i.e.,
+  #the number of columns.
+  means <- numeric(nc)
+  #it will be initially empty so we use a 'for' loop to go through each column
+  #until all columns are complete. it creates an integer vector that starts at 1 and
+  #ends at nc
+  for(i in 1:nc) {
+    #and get the mean of each column i.e. 'i'
+    means[i] <- mean(x[, i])
+  }
+  #now you specify what you want returned. In this case that is the vector 
+  #of means
+  means
+  
+}
+
+## * We want to remove the NA values. so add a couple of amendments
+## add the removeNA feature to the argument of the function so
+# that the user can specify if they want this on or not. We have made it TRUE by
+# default
+
+
+
+```
+
+## **Column mean function**
+```{r, echo = TRUE}
+columnmean <- function(x, removeNA = TRUE) {
+  nc <- ncol(x)
+  
+  means <- numeric(nc)
+  
+  for(i in 1:nc) {
+    
+    means[i] <- mean(x[, i], na.rm = removeNA)
+  }
+  
+  means
+  
+}
+
+```
+
+## **Column sum function**
+```{r, echo = TRUE}
+columnsum <- function(x, removeNA = TRUE) {
+  nc <- ncol(x)
+  
+  sums <- numeric(nc)
+  
+  for(i in 1:nc) {
+    
+    sums[i] <- sum(x[, i], na.rm = removeNA)
+  }
+  
+  sums
+  
+}
+
+
+#vector[!is.na(vector)]#
+length(airquality$Ozone[is.na(airquality$Ozone)])
+length(airquality$Ozone[!is.na(airquality$Ozone)])
+```
+
+
+       
