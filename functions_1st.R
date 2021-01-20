@@ -56,16 +56,41 @@ columnmean <- function(x) {
 ## add the removeNA feature to the argument of the function so
 # that the user can specify if they want this on or not. We have made it TRUE by
 # default
+
+
+
+
+
 columnmean <- function(x, removeNA = TRUE) {
   nc <- ncol(x)
-
+  
   means <- numeric(nc)
-
+  
   for(i in 1:nc) {
-
+    
     means[i] <- mean(x[, i], na.rm = removeNA)
   }
-
+  
   means
   
 }
+
+
+columnsum <- function(x, removeNA = TRUE) {
+  nc <- ncol(x)
+  
+  sums <- numeric(nc)
+  
+  for(i in 1:nc) {
+    
+    sums[i] <- sum(x[, i], na.rm = removeNA)
+  }
+  
+  sums
+  
+}
+
+vector[!is.na(vector)]
+length(airquality$Ozone[is.na(airquality$Ozone)])
+length(airquality$Ozone[!is.na(airquality$Ozone)])
+       
