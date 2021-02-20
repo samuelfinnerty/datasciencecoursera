@@ -63,4 +63,31 @@ printmessage2(x)
   # Were your expectations correct in the first place?
   # Can you reproduce the problem (exactly)?
 
+################################################################################
+
+## Debugging Tools in R
+
+  # tracebook: prints out the function call stack after an error occurs; does 
+  #            nothing if there's no error
+  
+  # debug: flags a function for "debug" mode which allows you to step through
+  #        execution of function one line at a time
+
+  # browser: suspends the execution of a function wherever it is called and puts
+  #         the function in debug mode
+
+  # trace: allows you to insert debugging code into a function in specific 
+  #        places
+
+  # recover: allows you to modify the error behaviour so that you can browse
+  #          the function call stack
+
+# These are interactive tools allowing you to pick through a function.
+# * Also the blunt technique of inserting print/cat statements in the function. 
+
+################################################################################
+
+# Debugging - Using the Tools
+
+
              
